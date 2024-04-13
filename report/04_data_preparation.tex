@@ -1,40 +1,66 @@
 \section{Data Preparation}
 
-\subsection{What was your data source (e.g., web scraping, corporate data, a standard machine learning data set, open data, etc.)?}
+\subsection{What was your data source?}
 
-The dataset used in this study is sourced from open data published by the Government of Canada, on its Open Government Portal~\cite{ogp}, an official government website.
-The use of open data from a reputable government source enhances transparency and allows for reproducibility in research.
+Three datasets were used in this analysis.
+
+The first, as noted above, was the Government of Canada's Open Government Portal~\cite{ogp}.
+The name of the dataset is NAFO Division 4T groundfish research vessel trawl survey (September Survey) dataset~\cite{groundfish}.
+The dataset contained information ecological information (i.e., species caught, specimen counts and specimen weights),
+fishing information (i.e., gear type used, fishing vessel) and spatial information (i.e., latitude and longitude).
+For mapping purposes, I also used a geospatial file of the Canada Provincial Boundaries from the same catalogue~\cite{canmap}.
+
+The dataset did not contain and elevation data and therefore this had to be acquired elsewhere.
+Luckily, there is an excellent website and web app called the General bathymetric Chart of the Oceans (GEBCO),
+which is maintained by the international community~\cite{gebco}.
+The web app provides an interface for downloading world ocean's bathymetric data.
 
 \subsection{How good was the data quality?}
 
-In general, the quality of the data was very good.
-Aside from the minimal transformations and cleaning required, the dataset was structured in a way that facilitated our analysis.
-Specifically, each row of data related to a single observation and each column was an attribute of that datum.
-Occasionally, observations had overlapping data, for example, one row containing values for a single province and another containing data for all of Canada.
-When this occurred, it was important care was taken not to double-count those data.
+The quality of the fishing data was excellent.
+There were no missing values and the column data types were respected.
+For example, the columns that you would expect to be \textit{float} type, e.g., lat/lon values, were indeed.
+The dataset was accompanied by a data dictionary, which contained clear explanation of the variables in both English and French.
+The only thing worth mentioning was that the coordinate reference system for the latitudes and longitudes were difficult to obtain.
+They are not displayed on the website but the metadata XML file did specify EPSG 4269.
 
 \subsection{What did you need to do to procure it?}
 
-To procure the dataset, we downloaded the csv of the dataset and we ingested it using the pandas library~\cite{pandas}.
+The data from the Open Government Portal was downloaded using a web browser.
+The data was accessible via a static link.
+The format of the fishing data was a single comma separated values (CSV) document and the map was formatted as a GEOJSON file.
+The GEBCO elevation data was downloaded using their customizable web application.
+In this application, I was able to download the bathymetric data as a NetCDF file for only the area of interest.
+I was very impressed with this tool!
+
 
 \subsection{What tools or code did you need to use to prepare it for analysis?}
 
-First, we segmented our analysis into three distinct categories: Chicken Meat, Hogs, and Wheat.
-The main libraries we used for our analysis were pandas, seaborn, numpy and statsmodels.api.
-Utilizing a dedicated helper function, we crafted time series plots for each category, with a focus on prices \textemdash a pivotal variable in our analysis.
-To ensure data completeness, we applied a boolean mask to handle null values.
-While exploring the data we recognized the historical prices of Newfoundland is very different from other provinces as you can see in Figure~\ref{fig:chicken_prices} so we decided to exclude Newfoundland from our analysis.
-We decided that it would be easiest to work with the data if all the prices were aggregated into a single response so we created a time series for each category where the mean prices for each category is the data and the datetime objects as the index.
+
+\subsubsection{Fishing Data}
+
+
+
+\subsubsection{Mapping Data}
+
+
+
+\subsubsection{Elevation Data}
+
+
 
 \subsection{What challenges did you face?}
 
-One notable hurdle emerged with certain features, like $REF\_DATE$, initially recorded as text, necessitating a round of feature engineering to render them immediately usable.
-The pricing dataset, with its varied units of measurement for a single commodity, introduced complexity, prompting us to carefully address this diversity during our analysis.
-The Wheat production dataset presented its own intricacies, featuring multiple entries for a given year.
-This intricacy made comparisons with other commodities a nuanced task.
-Meanwhile, the diverse data ranges of farm products posed a challenge in selecting the most pertinent ones for our analytical lens.
-The separation of price and production datasets added layers of complexity, urging us to integrate these disparate sources for a more comprehensive understanding.
-Addressing null values within the merged datasets became another crucial step in ensuring the integrity of our analysis.
+Since geographic information systems is not my area of expertise, I found it challenging figuring out how to reproject a geographical data to another
+coordinate reference system.
+In the end, this was not too difficult, but it took time to figure out.
+
+Another major challenge was learning about the Xarray python package~\cite{xarray}.
+This is a very impressive package, albeit quite complex.
+It took me a long time to figure out how to extract the data from a data array, manipulate it and create a new data array.
+
+
+
 
 
 \begin{figure}
