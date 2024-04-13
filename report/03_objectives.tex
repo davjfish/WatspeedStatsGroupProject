@@ -7,19 +7,38 @@ These survey can be carried out on either Canadian Coast Guard Science vessels o
 The stock assessment surveys conduct fishing and oceanographic activity as a means to monitor fish populations and produce population indices.
 Many of the data from stock assessment surveys have been made available via the Open Government Portal~\cite{ogp}.
 
+\subsection{Goal of the analysis}
 
-\subsection{What I am setting out to predict?}
-
-Fish and other aquatic organisms
-
-
-in all Canadian Oceans, including the Southern Gulf of St. Lawrence.
-
+The importance of having robust models for predicting the distribution of aquatic organisms cannot be overstated.
+From a resource extraction point of view, modelled distributions can help direct fishing efforts; resulting in more efficient fisheries.
+From an environmental conservation point of view, modelled distributions can help identify which geographic areas should be targets for conservation efforts.
+The goal of this analysis is to build models that can be used to predict the probability of occurrences of species of interest in the Southern Gulf of St. Lawrence (sGSL).
+Specifically, I employ a logistic regression approach, using latitude, longitude and water depth (i.e., elevation) to predict the probability of occurrence of the following six species:
 
 
-The goal of this
+\begin{itemize}
+    \item American plaice (\textit{Hippoglossoides platessoides})
+    \item Atlantic cod (\textit{Gadus morhua})
+    \item Atlantic herring (\textit{Clupea harengus})
+    \item Redfish unidentified (\textit{Sebastes sp.})
+    \item American lobster (\textit{Homarus americanus})
+    \item Snow crab (\textit{Chionoecetes opilio})
+\end{itemize}
 
- What is your rationale for there being a correlation in the data that you’re looking to confirm and/or exploit?
+\subsection{Rationale behind the analysis}
+
+Spatial autocorrelation, i.e., when observations in space that are closer together are more correlated, is a common occurrence in the natural world~\cite{spac_wiki}.
+Accordingly, I would expect that using geographic coordinates to predict the distribution of occurrences would useful.
+
+A basic tentant of ecology is that different species acquire different specializations and thus inhabit different ecological niches and strategies.
+In aquatic ecosystems, the physio-chemical and ecological environments change substantially with water depth.
+For example, certain species will be physiologically adapted to cope with the colder temperature, higher pressure and salinity levels that occur at low elevations.
+However, within the scope of a given ecosystem (e.g., within the sGSL) certain species will specialize more than others; i.e., specialist verses generalists.
+Accordingly, I would expect that,  at least for certain species using a measure of water depth at a given location would be useful in predicting the likelihood of occurrence.
+
+
+
+What is your rationale for there being a correlation in the data that you’re looking to confirm and/or exploit?
 
 
 The goal of this analysis is to explore and better understand changes in the production of agricultural crops in Canada.
