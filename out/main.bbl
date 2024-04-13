@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{xarray}
+NumFOCUS.
+\newblock Xarray.
+\newblock \url{https://docs.xarray.dev/en/stable/}, 2024.
+\newblock Accessed on 2024-04-13.
+
+\bibitem{ogp}
+Government of~Canada.
+\newblock Open government portal.
+\newblock \url{https://open.canada.ca/}, 2023.
+\newblock Accessed on 2023-12-11.
+
+\bibitem{groundfish}
+Government of~Canada.
+\newblock Nafo division 4t groundfish research vessel trawl survey (september
+  survey) dataset.
+\newblock
+  \url{https://open.canada.ca/data/en/dataset/1989de32-bc5d-c696-879c-54d422438e64},
+  2024.
+\newblock Accessed on 2024-04-13.
+
+\bibitem{canmap}
+Government of~Manitoba.
+\newblock Provinces and territories of canada, april 2022.
+\newblock
+  https://open.canada.ca/data/en/dataset/85efc01b-163f-ebba-2378-c43eadfb3b3f,
+  2022.
+\newblock Accessed on 2024-04-13.
+
+\bibitem{gebco}
+The General Bathymetric~Chart of~the Oceans~(GEBCO).
+\newblock Gebco gridded bathymetry data download.
+\newblock \url{https://download.gebco.net/}, 2024.
+\newblock Accessed on 2024-04-13.
+
+\bibitem{spac_wiki}
+Wikipedia.
+\newblock Spatial analysis.
+\newblock
+  \url{https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_auto-correlation},
+  2024.
+\newblock Accessed on 2024-04-13.
+
+\end{thebibliography}

@@ -50,6 +50,7 @@ and the other containing the site / fishing set details (time, date, lat/lon).
 The linkage between the two tables was made by a fishing set ID column (\textbf{site\_id}).
 After this was done, I was dealing with a total of 7,257 fishing sets which can be seen in Figure~\ref{fig:set_map}.
 
+
 \subsubsection{Mapping Data}
 
 The GEOJSON file was loaded using the geopandas python library into a geodataframe.
@@ -61,8 +62,17 @@ Without this step, the points and polygons cannot be represented on the same map
 \subsubsection{Elevation Data}
 
 The elevation data was downloaded in NetCDF format and loaded directly into the python Xarray library~\cite{xarray}.
-When plotted using \textbf{Matplotlib}, you can clearly see the family contours of Atlantic Canada, the characteristic
+When plotted using \textbf{Matplotlib}, you can clearly see the familiar contours of Atlantic Canada, the characteristic
 shallow waters of the sGSL and the deeper waters out in the channel of the St. Lawrence seaway (see Figure~\ref{fig:elevation_map}).
+
+Using this two-dimensional array of elevation data, the next step was to extrapolate an elevation value for each fishing set in the fishing set dataframe.
+To do this, I followed an example from the \textbf{Xarray} docs.
+Specifically, I made use of the Data Array \textit{sel} method.
+This method has an argument called \textit{method} which specifies how to deal with inexact matches, i.e.,
+when trying to determine elevation for a set of coordinates that are not in the array. I decided to use the \textit{nearest} method,
+which returns value from the nearest coordinate.
+
+# use the "nearest" method to determine how to deal with the miss elevation value for this coordinate pair
 
 We wanted elevation for each point of the fishing dataset
 
