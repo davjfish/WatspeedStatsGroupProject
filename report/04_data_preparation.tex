@@ -47,8 +47,12 @@ When exploring the dataset, it became apparent that these for a given coordinate
 For the sake of efficiency, I parsed the original dataset into two separate dataframes:
 one containing the biological information (species observed, how many, total weight)
 and the other containing the site / fishing set details (time, date, lat/lon).
-The linkage between the two tables was made by a fishing set ID column (\textbf{site\_id}).
-After this was done, I was dealing with a total of 7,257 fishing sets which can be seen in Figure~\ref{fig:set_map}.
+The linkage between the two tables was made by a fishing set ID column named \textbf{site\_id}.
+After this was done, I was dealing with a total of 7,257 fishing sets which are on display in Figure~\ref{fig:set_map}.
+Finally, I wanted there to be a boolean response column in the fishing set dataframe for each species of interest.
+To do this, I used the pandas \textit{Series.apply} method on the \textit{set\_id} column.
+The apply function took the set ID and searched for a corresonding entry in the species dataframe.
+If one was found, the function return \textit{True}, otherwise it returned \textit{False}.
 
 
 \subsubsection{Mapping Data}
@@ -71,16 +75,19 @@ Specifically, I made use of the Data Array \textit{sel} method.
 This method has an argument called \textit{method} which specifies how to deal with inexact matches, i.e.,
 when trying to determine elevation for a set of coordinates that are not in the array. I decided to use the \textit{nearest} method,
 which returns value from the nearest coordinate.
+To add an elevation column to the dataframe, I used the pandas Dataframe.apply method in combination with the above.
+I then looked at a histogram of elevation value to: a) ensure that no single elevation value was greater than 0m (i.e. above sea level)
+and b) to get a sense of the distribution of elevation across the dataset (see Figure~\ref{fig:elevation_hist})
 
-# use the "nearest" method to determine how to deal with the miss elevation value for this coordinate pair
-
-We wanted elevation for each point of the fishing dataset
-
-
-QC of checking that no sites had an elevation > 0
-
+A screenshot of the first five rows of the the final fishing set dataframe that was used in the subsequent phase of the analysis is presented in
+Figure~\ref{fig:set_df}
 
 
+\begin{figure}
+    \includegraphics[width=\linewidth]{set_df}
+    \caption{This figure displays the 7,257 fishing sets contained in this dataset. A fishing set is represented by a red point.}
+    \label{fig:set_df}
+\end{figure}
 
 
 
@@ -107,3 +114,10 @@ It took me a long time to figure out how to extract the data from a data array, 
     \caption{This figure shows the raw elevation data array. The values are color codes according to the elevation in meters}
     \label{fig:elevation_map}
 \end{figure}
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{elevation_hist}
+    \caption{A frequency distribution of elevation in meters. Most of the sites have an elevation between -100m and 0m.}
+    \label{fig:elevation_hist}
+\end{figure}
+
