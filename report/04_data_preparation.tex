@@ -33,9 +33,7 @@ The GEBCO elevation data was downloaded using their customizable web application
 In this application, I was able to download the bathymetric data as a NetCDF file for only the area of interest.
 I was very impressed with this tool!
 
-
 \subsection{What tools or code did you need to use to prepare it for analysis?}
-
 
 \subsubsection{Fishing Data}
 
@@ -54,14 +52,12 @@ To do this, I used the pandas \textit{Series.apply} method on the \textit{set\_i
 The apply function took the set ID and searched for a corresonding entry in the species dataframe.
 If one was found, the function return \textit{True}, otherwise it returned \textit{False}.
 
-
 \subsubsection{Mapping Data}
 
 The GEOJSON file was loaded using the geopandas python library into a geodataframe.
 The only data preparation needed for these data was to reproject the dataset to the same coordinate reference system as the fishing data.
 As noted above, the point data from fishing was presented in EPSG 4269.
 Without this step, the points and polygons cannot be represented on the same map.
-
 
 \subsubsection{Elevation Data}
 
@@ -79,17 +75,8 @@ To add an elevation column to the dataframe, I used the pandas Dataframe.apply m
 I then looked at a histogram of elevation value to: a) ensure that no single elevation value was greater than 0m (i.e. above sea level)
 and b) to get a sense of the distribution of elevation across the dataset (see Figure~\ref{fig:elevation_hist})
 
-A screenshot of the first five rows of the the final fishing set dataframe that was used in the subsequent phase of the analysis is presented in
+A screenshot of the first five rows of the final fishing set dataframe that was used in the subsequent phase of the analysis is presented in
 Figure~\ref{fig:set_df}
-
-
-\begin{figure}
-    \includegraphics[width=\linewidth]{set_df}
-    \caption{This figure displays the 7,257 fishing sets contained in this dataset. A fishing set is represented by a red point.}
-    \label{fig:set_df}
-\end{figure}
-
-
 
 \subsection{What challenges did you face?}
 
@@ -108,7 +95,6 @@ It took me a long time to figure out how to extract the data from a data array, 
     \label{fig:set_map}
 \end{figure}
 
-
 \begin{figure}
     \includegraphics[width=\linewidth]{elevation_map}
     \caption{This figure shows the raw elevation data array. The values are color codes according to the elevation in meters}
@@ -121,3 +107,8 @@ It took me a long time to figure out how to extract the data from a data array, 
     \label{fig:elevation_hist}
 \end{figure}
 
+\begin{figure}
+    \includegraphics[width=\linewidth]{set_df}
+    \caption{A screenshot of the first five rows of the fishing set dataframe, used in the susequent phase of the analysis.}
+    \label{fig:set_df}
+\end{figure}
