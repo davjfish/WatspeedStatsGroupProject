@@ -42,12 +42,35 @@ I was very impressed with this tool!
 As noted above, the species / fishing data was very clean.
 I loaded the data from its original CSV into a pandas dataframe.
 I ensured all the data types made sense using the \textbf{DataFrame.info()} method.
+The dataset contained 166,694 rows of data; each one being a species observation at a particular place and time.
+When exploring the dataset, it became apparent that these for a given coordinate on a given date, there were many species observed.
+For the sake of efficiency, I parsed the original dataset into two separate dataframes:
+one containing the biological information (species observed, how many, total weight)
+and the other containing the site / fishing set details (time, date, lat/lon).
+The linkage between the two tables was made by a fishing set ID column (\textbf{site\_id}).
+After this was done, I was dealing with a total of 7,257 fishing sets which can be seen in Figure~\ref{fig:set_map}.
 
 \subsubsection{Mapping Data}
 
+The GEOJSON file was loaded using the geopandas python library into a geodataframe.
+The only data preparation needed for these data was to reproject the dataset to the same coordinate reference system as the fishing data.
+As noted above, the point data from fishing was presented in EPSG 4269.
+Without this step, the points and polygons cannot be represented on the same map.
 
 
 \subsubsection{Elevation Data}
+
+The elevation data was downloaded in NetCDF format and loaded directly into the python Xarray library~\cite{xarray}.
+When plotted using \textbf{Matplotlib}, you can clearly see the family contours of Atlantic Canada, the characteristic
+shallow waters of the sGSL and the deeper waters out in the St. Lawrence seaway (see Figure~\ref{fig:elevation_map}).
+
+We wanted elevation for each point of the fishing dataset
+
+
+QC of checking that no sites had an elevation > 0
+
+
+
 
 
 
@@ -62,12 +85,15 @@ This is a very impressive package, albeit quite complex.
 It took me a long time to figure out how to extract the data from a data array, manipulate it and create a new data array.
 
 
-
+\begin{figure}
+    \includegraphics[width=\linewidth]{sites_map}
+    \caption{This figure displays the 7,257 fishing sets contained in this dataset. A fishing set is represented by a red point.}
+    \label{fig:set_map}
+\end{figure}
 
 
 \begin{figure}
-    \includegraphics[width=\linewidth]{merged_graph}
-    \caption{This figure shows the raw data, and aggregated forms of Chicken Meat, Hogs and Wheat.}
-    \label{fig:chicken_prices}
+    \includegraphics[width=\linewidth]{elevation_map}
+    \caption{This figure shows the raw elevation data array. The values are color codes according to the elevation in meters}
+    \label{fig:elevation_map}
 \end{figure}
-
