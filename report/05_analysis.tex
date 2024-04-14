@@ -18,15 +18,15 @@ A separate regression model was computed for each species, all taking on the fol
     \item and ${Logit}(pi)$ is the link function output for the $i$-th observation of the dataset.
 \end{itemize}
 
-The models were computed using the Python $statsmodels$ package.
+The models were computed using the Python \textbf{statsmodels} package.
 A column of ones was added to the dataframe of predictor in order to represent the intercept.
 The resulting model for each species was then used to calculate the estimated probability of detection for each point in the dataset.
-This was achieved using the resulting model's $predict$ method.
+This was achieved using the resulting model's \textbf{predict} method.
 Next, plots were generated for each species, displaying the relationship between the $Logit(p)$ function and the estimated probability of detection.
 prior to plotting, the rows of the data were sorted by the estimated probability in ascending order.
 In the same graphs, the observed presence-absence values were plotted in order to provide a sense of the distribution
 of the estimated probabilities across the true values.
-Boxplots displaying the same distribution of probably across the true presence-absence value were also generated.
+Box-plots displaying the same distribution of probably across the true presence-absence value were also generated.
 
 Receiver operator curves (ROCs) were generated for each species-model.
 The ROC helps to understand the trade-offs in selecting for different discrimination thresholds in terms of obtaining true positives vs.
@@ -39,7 +39,8 @@ The larger the AUC, the better the model performance.
 Finally, the main output of this analysis is a distribution map for each species' occurrence in the southern Gulf of St. Lawrence.
 For each coordinate in the data array, a corresponding estimate of probability of detection is calculated.
 The heat map provides a way to visualize the estimated probabilities over the landscape.
-In order to do this, I flattened the elevation data array into a pandas dataframe with the following columns: $const$, $latitude$, $longitude$, $elevation$.
+In order to do this, I flattened the elevation data array into a pandas dataframe with the following columns:
+$const$, $latitude$, $longitude$, $elevation$.
 Then, once again using the model's \textbf{predict} method, I calculated the estimated probability of occurrence for each row.
 The resulting series of probability was then reshaped into the original ndarray shape of the elevation data array and inserted into a
 new data array containing the same coordinates as the original.
@@ -54,8 +55,7 @@ The estimated coefficients for all predictors were observed to be statistically 
 and thus retained in the final model.
 
 The resulting $Logit(p)$ vs. estimated probability plots for each model is presented in Figure~\ref{fig:logitplots}.
-Visual inspection of the plots gives us a sense about how effective the resulting models will be at effectively
-
+The true presence-absence values are also shown on the same graph.
 The distribution of estimated probabilities across the observed presence-absence values are presented in Figure~\ref{fig:boxplots}.
 
 The ROC plots for each species-model is presented in Figure~\ref{fig:rocs}.
@@ -75,7 +75,6 @@ Finally, the resulting distribution map for each species in the sGSL is presente
     }
     \label{fig:reg_coefs}
 \end{figure}
-
 
 
 
