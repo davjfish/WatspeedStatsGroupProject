@@ -36,10 +36,15 @@ For each ROC, the area under the curve (AUC) is calculated.
 As noted in our course module, a model with an AUC less than 0.5 performs worse than a random estimator.
 The larger the AUC, the better the model performance.
 
-Finally, the main output of this analysis is a heat map of the southern Gulf of St. Lawrence.
+Finally, the main output of this analysis is a distribution map for each species' occurrence in the southern Gulf of St. Lawrence.
 For each coordinate in the data array, a corresponding estimate of probability of detection is calculated.
 The heat map provides a way to visualize the estimated probabilities over the landscape.
-
+In order to do this, I flattened the elevation data array into a pandas dataframe with the following columns: $const$, $latitude$, $longitude$, $elevation$.
+Then, once again using the model's \textbf{predict} method, I calculated the estimated probability of occurrence for each row.
+The resulting series of probability was then reshaped into the original ndarray shape of the elevation data array and inserted into a
+new data array containing the same coordinates as the original.
+These data arrays were then plotted using a heatmap theme color mapping.
+Finally, the true occurrences were overlain the heat map to provide a visual sense of model performance.
 
 
 \subsubsection{Results}
@@ -51,10 +56,15 @@ and thus retained in the final model.
 The resulting $Logit(p)$ vs. estimated probability plots for each model is presented in Figure~\ref{fig:logitplots}.
 Visual inspection of the plots gives us a sense about how effective the resulting models will be at effectively
 
-The distribution of estimated probabilities across the observed presence-absence values are presented in Figure~\ref{fig:boxplots}
+The distribution of estimated probabilities across the observed presence-absence values are presented in Figure~\ref{fig:boxplots}.
 
-
-
+The ROC plots for each species-model is presented in Figure~\ref{fig:rocs}.
+The shapes and corresponding AUCs are indicative of the performance of each model.
+All the computed AUCs are well-above 0.5, indicated that these models have at least some degree of usefulness.
+The two most powerful models produced were for Redfish and Lobster which had AUCs of 0.90 and 0.95, respectively.
+The least powerful model was for Snow Crab which had an AUC of 0.67.
+A table of computed discrimination thresholds for each model are presented in Figure~\ref{fig:regression_discr_ths}.
+Finally, the resulting distribution map for each species in the sGSL is presented in Figure~\ref{fig:heat_maps}.
 
 
 \begin{figure}
@@ -87,6 +97,40 @@ The distribution of estimated probabilities across the observed presence-absence
         A boxplot for each species model that shows the distribution of estimated probabilities for presences vs. absences.
     }
     \label{fig:boxplots}
+\end{figure}
+
+
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{rocs}
+    \caption{
+        The receiver operator curves (ROC) for each species model.
+        The area under the curve (AUC), Youden's J threshold and max MCC threshold are shown for each graph.
+        These graphs display the trade-off between obtaining true positives and false positives when selecting different discrimination thresholds.
+    }
+    \label{fig:rocs}
+\end{figure}
+
+
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{regression_discr_ths}
+    \caption{
+        A table key discrimination thresholds for each species model.
+    }
+    \label{fig:regression_discr_ths}
+\end{figure}
+
+
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{heat_maps}
+    \caption{
+        Distribution maps for all six species.
+        Each map displays the inferred estimated probability for each point on the map and is depicted using a heatmap themed color mapping.
+        The true occurrences for each species are overlain in order to provide a visual sense of model's performance.
+    }
+    \label{fig:heat_maps}
 \end{figure}
 
 
