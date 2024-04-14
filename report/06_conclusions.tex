@@ -2,22 +2,37 @@
 
 \subsection{Was the model useful?}
 
-Within the geographic scope of this dataset, certain species were found to be ubiquitous while others seemed to be more specialized and heterogeneous in their distributions.
+Within the geographic scope of this dataset, certain species were found to be ubiquitous while others.
+For example, American plaice were detected at the majority of sites, while American lobster only turned up in certain
+geographic areas.
+It was interesting to note that latitude, longitude and elevation were still found to be significant predictors for each
+species despite those differences.
+
+The component of the analysis focusing on discrimination thresholds was interesting but less useful.
+Specifically, I was surprised to see all the key thresholds for American plaice converge at 1.0.
+
+The reason why it was not useful, is that the goal of the analysis was not to predict presence-absence, per se, but instead
+to produce a distribution map of based on the resulting probabilities of detection.
+
+
+\subsection{What did you learn about your data set?}
+
+Aquatic ecosystems face numerous challenges, from over-fishing to climate change to the introduction of invasive species.
+Distribution
+
+
+
+I learn that logistic regression
+
+seemed to be more specialized and heterogeneous in their distributions.
 In the case of the former, American plaice being the best example, the models were of limited use.
 For species like Redfish and Lobster, which are known to respond strongly to water depth, the models were seemed to be very effective.
 In the heatmap for Lobster, it was interesting to note the areas which the model predicted the presence to be highest are
 very well-established lobster fishing areas (hence why no samples were collected there).
 
 
-It is really cool to look at Plaice, where the model basically said \"always bet on it being there\"
+%It is really cool to look at Plaice, where the model basically said \"always bet on it being there\"
 
-
-Interesting to look at the discrimination thresholds, but the main value here was the array of estimated probabilites use to build the distribution maps.
-
-\subsection{What did you learn about your data set?}
-
-Aquatic ecosystems face numerous challenges, from over-fishing to climate change to the introduction of invasive species.
-Distribution
 
 
 
