@@ -1,20 +1,24 @@
 \section{Objectives}
 
-Canada oceans provide and important source of livelihood to Canadian as well as fulfill important ecological services.
-The Canadian Government has a mandate to ensure the Oceans remain healthy and economically and ecologically viable.
-The Department of Fisheries and Oceans (DFO) is tasked with conducting regular stock assessments surveys.
-These survey can be carried out on either Canadian Coast Guard Science vessels or contracted through privately owned fishing vessels.
-The stock assessment surveys conduct fishing and oceanographic activity as a means to monitor fish populations and produce population indices.
+Canadian oceans provide an important source of livelihood to Canadian in addition to fulfilling many important ecological roles.
+The Canadian Government has a mandate to ensure the Oceans remain ecologically healthy as well as economically viable.
+The Department of Fisheries and Oceans (DFO) is tasked with conducting regular stock assessments surveys to monitor the populations of fish and other aquatic
+organisms, including crustaceans.
+These surveys are carried out on either Canadian Coast Guard Science vessels or contracted out through privately owned fishing vessels conduct fishing
+primarily using bottom trawls. In addition to fishing, oceanographic measurements, such as water salinity, temperature and dissolved oxygen, are collected.
+The ultimate goal of these surveys is to estimate population indices for species of ecological and economic interest.
 Many of the data from stock assessment surveys have been made available via the Open Government Portal~\cite{ogp}.
 
 \subsection{Goal of the analysis}
 
 The importance of having robust models for predicting the distribution of aquatic organisms cannot be overstated.
 From a resource extraction point of view, modelled distributions can help direct fishing efforts; resulting in more efficient fisheries.
-From an environmental conservation point of view, modelled distributions can help identify which geographic areas should be targets for conservation efforts.
-The goal of this analysis is to build models that can be used to predict the probability of occurrences of species of interest in the Southern Gulf of St. Lawrence (sGSL).
-Specifically, I employ a logistic regression approach, using latitude, longitude and water depth (i.e., elevation) to predict the probability of occurrence of the following six species:
-
+From an environmental conservation point of view, distributions modelling can help to identify which geographic areas should be targets for
+conservation efforts.
+The goal of this analysis is to compute models that can be used to predict the probability of occurrences of species of interest in the Southern
+Gulf of St. Lawrence (sGSL).
+Specifically, I employ a logistic regression approach, using latitude, longitude and water depth (i.e., elevation) to predict the probability of
+occurrence of the following six species:
 
 \begin{itemize}
     \item American plaice (\textit{Hippoglossoides platessoides})
@@ -27,11 +31,14 @@ Specifically, I employ a logistic regression approach, using latitude, longitude
 
 \subsection{Rationale behind the analysis}
 
-Spatial autocorrelation, i.e., when observations in space that are closer together are more correlated, is a common occurrence in the natural world~\cite{spac_wiki}.
+Spatial autocorrelation, i.e., the phenomenon when observations in space that are closer together are more correlated, is a common occurrence
+in the natural world~\cite{spac_wiki}.
 Accordingly, I would expect that using geographic coordinates to predict the distribution of occurrences would useful.
 
-A basic tentant of ecology is that different species acquire different specializations and thus inhabit different ecological niches and strategies.
+A basic premise in ecology is that different species can be characterized by the different ecological niches they inhabit;
+each having their own strategy for making a living.
 In aquatic ecosystems, the physio-chemical and ecological environments change substantially with water depth.
-For example, certain species will be physiologically adapted to cope with the colder temperature, higher pressure and salinity levels that occur at low elevations.
-However, within the scope of a given ecosystem (e.g., within the sGSL) certain species will specialize more than others; i.e., specialist verses generalists.
-Accordingly, I would expect that,  at least for certain species using a measure of water depth at a given location would be useful in predicting the likelihood of occurrence.
+For example, certain species will be physiologically adapted to cope with the colder temperature, higher pressure and salinity levels that occur at
+low elevations.
+Accordingly, it would be reasonable to expect a species' distribution to be impacted by changes in elevation.
+
