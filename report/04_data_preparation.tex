@@ -2,27 +2,29 @@
 
 \subsection{What was your data source?}
 
-Three datasets were used in this analysis.
+A total of three datasets were used in this analysis.
+The first, originating from the Government of Canada's Open Government Portal~\cite{ogp}, is a dataset called
+\textbf{NAFO Division 4T groundfish research vessel trawl survey (September Survey) dataset}~\cite{groundfish}.
+This dataset contained information biological information (i.e., species caught, specimen counts and specimen weights),
+fishing information (i.e., gear type used, fishing vessel) and geospatial information (i.e., latitude and longitude).
+The second dataset also originated from the Open Government Portal and was called \textbf{Canada Provincial Boundaries}~\cite{canmap}.
+This geospatial dataset had a more minor role to play in the analysis, as it was only used for the purposes of providing geographical context on the generated maps.
 
-The first, as noted above, was the Government of Canada's Open Government Portal~\cite{ogp}.
-The name of the dataset is NAFO Division 4T groundfish research vessel trawl survey (September Survey) dataset~\cite{groundfish}.
-The dataset contained information ecological information (i.e., species caught, specimen counts and specimen weights),
-fishing information (i.e., gear type used, fishing vessel) and spatial information (i.e., latitude and longitude).
-For mapping purposes, I also used a geospatial file of the Canada Provincial Boundaries from the same catalogue~\cite{canmap}.
-
-The dataset did not contain and elevation data and therefore this had to be acquired elsewhere.
-Luckily, there is an excellent website and web app called the General bathymetric Chart of the Oceans (GEBCO),
-which is maintained by the international community~\cite{gebco}.
-The web app provides an interface for downloading world ocean's bathymetric data.
+The research vessel survey dataset did not contain and elevation data therefore this had to be acquired elsewhere.
+Luckily, there is an excellent website called the \textbf{General bathymetric Chart of the Oceans (GEBCO)}~\cite{gebco},
+which is operated and maintained by a consortium of international organisations.
+The GEBCO website has a builtin tool that provides an interface for querying and downloading bathymetric data from around the globe.
 
 \subsection{How good was the data quality?}
 
-The quality of the fishing data was excellent.
+The quality of the fishing data and was excellent.
 There were no missing values and the column data types were respected.
 For example, the columns that you would expect to be \textit{float} type, e.g., lat/lon values, were indeed.
 The dataset was accompanied by a data dictionary, which contained clear explanation of the variables in both English and French.
 The only thing worth mentioning was that the coordinate reference system for the latitudes and longitudes were difficult to obtain.
 They are not displayed on the website but the metadata XML file did specify EPSG 4269.
+Similarly, the elevation data was impeccable.
+The netCDF file was fully equipped with all the metadata one required to utilize the data effectively.
 
 \subsection{What did you need to do to procure it?}
 
@@ -37,27 +39,28 @@ I was very impressed with this tool!
 
 \subsubsection{Fishing Data}
 
-As noted above, the species / fishing data was very clean.
+As noted above, the fishing data was very clean.
 I loaded the data from its original CSV into a pandas dataframe.
 I ensured all the data types made sense using the \textbf{DataFrame.info()} method.
-The dataset contained 166,694 rows of data; each one being a species observation at a particular place and time.
-When exploring the dataset, it became apparent that these for a given coordinate on a given date, there were many species observed.
+The dataset contained 166,694 rows; each one being an observation of a species at a particular time and place.
+When exploring the dataset, it became apparent that for a given coordinate on a given date, many species were observed.
+In other words, many rows related to a single sample or fishing set.
 For the sake of efficiency, I parsed the original dataset into two separate dataframes:
 one containing the biological information (species observed, how many, total weight)
-and the other containing the site / fishing set details (time, date, lat/lon).
-The linkage between the two tables was made by a fishing set ID column named $set\_id$.
-After this was done, I was dealing with a total of 7,257 fishing sets which are on display in Figure~\ref{fig:set_map}.
+and the other containing the sample / fishing set details (time, date, lat/lon).
+The linkage between the two tables was made by an ID column named $set\_id$.
+After this was done, I was dealing with a total of 7,257 fishing sets whose geographic positions can be viewed in Figure~\ref{fig:set_map}.
 Finally, I wanted there to be a boolean response column in the fishing set dataframe for each species of interest.
 To do this, I used the pandas \textit{Series.apply} method on the $set\_id$ column.
-The apply function took the set ID and searched for a corresonding entry in the species dataframe.
+The apply function took the set ID and searched for a corresponding entry in the species dataframe.
 If one was found, the function return $True$, otherwise it returned $False$.
 
 \subsubsection{Mapping Data}
 
 The GEOJSON file was loaded using the geopandas python library into a geodataframe.
-The only data preparation needed for these data was to reproject the dataset to the same coordinate reference system as the fishing data.
+The only data preparation needed for these data was to re-project the geospatial dataset to match the same coordinate reference system as the fishing data.
 As noted above, the point data from fishing was presented in EPSG 4269.
-Without this step, the points and polygons cannot be represented on the same map.
+Without this step, the points and polygons would be misaligned.
 
 \subsubsection{Elevation Data}
 
@@ -65,50 +68,63 @@ The elevation data was downloaded in NetCDF format and loaded directly into the 
 When plotted using \textbf{Matplotlib}, you can clearly see the familiar contours of Atlantic Canada, the characteristic
 shallow waters of the sGSL and the deeper waters out in the channel of the St. Lawrence seaway (see Figure~\ref{fig:elevation_map}).
 
-Using this two-dimensional array of elevation data, the next step was to extrapolate an elevation value for each fishing set in the fishing set dataframe.
+Using the two-dimensional array of elevation data, the next step was to extrapolate an elevation value for each fishing set in the fishing set dataframe.
 To do this, I followed an example from the \textbf{Xarray} docs.
 Specifically, I made use of the Data Array \textbf{sel} method.
 This method has an argument called \textbf{method} which specifies how to deal with inexact matches, i.e.,
-when trying to determine elevation for a set of coordinates that are not in the array. I decided to use the \textbf{nearest} method,
-which returns value from the nearest coordinate.
-To add an elevation column to the dataframe, I used the pandas \textbf{Dataframe.apply} method in combination with the above.
-I then looked at a histogram of elevation value to: a\) ensure that no single elevation value was greater than 0m (i.e. above sea level)
-and b\) to get a sense of the distribution of elevation across the dataset (see Figure~\ref{fig:elevation_hist})
+when trying to determine elevation for a set of coordinates that are not in the array.
+I decided to use the \textbf{nearest} method, which returns value from the nearest coordinate.
+To add an elevation column to the dataframe, I used the pandas \textbf{Dataframe.apply} method in combination with the approach outlined above.
+I then looked at a histogram of elevation value to: 1\) ensure that no single elevation value was greater than 0m (i.e. above sea level)
+and 2\) to get a sense of the distribution of elevation across the dataset (see Figure~\ref{fig:elevation_hist}).
 
 A screenshot of the first five rows of the final fishing set dataframe that was used in the subsequent phase of the analysis is presented in
-Figure~\ref{fig:set_df}
+Figure~\ref{fig:set_df}.
 
 \subsection{What challenges did you face?}
 
-Since geographic information systems is not my area of expertise, I found it challenging figuring out how to reproject a geographical data to another
+Since geographic information systems is not my area of expertise, I found it challenging figuring out how to re-project a geographical data to another
 coordinate reference system.
 In the end, this was not too difficult, but it took time to figure out.
 
-Another major challenge was learning about the \textbd{Xarray} python package~\cite{xarray}.
+Another challenge was learning about the \textbd{Xarray} python package~\cite{xarray}.
 This is a very impressive package, albeit quite complex.
 It took me a long time to figure out how to extract the data from a data array, manipulate it and create a new data array.
 
 
 \begin{figure}
     \includegraphics[width=\linewidth]{sites_map}
-    \caption{This figure displays the 7,257 fishing sets contained in this dataset. A fishing set is represented by a red point.}
+    \caption{
+        This figure displays the 7,257 fishing sets contained in this dataset.
+        A fishing set is represented by a red point.
+    }
     \label{fig:set_map}
 \end{figure}
 
 \begin{figure}
     \includegraphics[width=\linewidth]{elevation_map}
-    \caption{This figure shows the raw elevation data array. The values are color codes according to the elevation in meters}
+    \caption{
+        This figure shows the raw elevation data array.
+        The values of elevation are color coded according to the scale presented on the right-hand side of the figure.
+        The units are in meters.
+    }
     \label{fig:elevation_map}
 \end{figure}
 
 \begin{figure}
     \includegraphics[width=\linewidth]{elevation_hist}
-    \caption{A frequency distribution of elevation in meters. Most of the sites have an elevation between -100m and 0m.}
+    \caption{
+        A histogram displaying the frequency distribution of elevation in meters from the fishing set dataframe.
+        Most of the sites where fishing occurred had an elevation between -100m and 0m.
+    }
     \label{fig:elevation_hist}
 \end{figure}
 
 \begin{figure}
     \includegraphics[width=\linewidth]{set_df}
-    \caption{A screenshot of the first five rows of the fishing set dataframe, used in the susequent phase of the analysis.}
+    \caption{
+        A screenshot of the first five rows of the fishing set dataframe, used in the susequent phase of the analysis.
+        The $set\_id$ column is the linkage to the species dataframe.
+    }
     \label{fig:set_df}
 \end{figure}
