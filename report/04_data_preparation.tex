@@ -75,8 +75,8 @@ This method has an argument called \textbf{method} which specifies how to deal w
 when trying to determine elevation for a set of coordinates that are not in the array.
 I decided to use the \textbf{nearest} method, which returns value from the nearest coordinate.
 To add an elevation column to the dataframe, I used the pandas \textbf{Dataframe.apply} method in combination with the approach outlined above.
-I then looked at a histogram of elevation value to: 1\) ensure that no single elevation value was greater than 0m (i.e. above sea level)
-and 2\) to get a sense of the distribution of elevation across the dataset (see Figure~\ref{fig:elevation_hist}).
+I then looked at a histogram of elevation value to ensure that no single elevation value was greater than 0m (i.e. above sea level)
+and to get a sense of the distribution of elevation across the dataset (see Figure~\ref{fig:elevation_hist}).
 
 A screenshot of the first five rows of the final fishing set dataframe that was used in the subsequent phase of the analysis is presented in
 Figure~\ref{fig:set_df}.
